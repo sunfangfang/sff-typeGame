@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>typeGame</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/index.js"></script>
+    <script>
+        window.onload=function(){
+            var games=new game();
+            var play=document.getElementById("play");
+            var replay=document.getElementById("replay");
+            var pause=document.getElementById("close");
+            var jixu=document.getElementById("continue");
+            var hide=document.getElementById("hide")
+            play.onclick=function(){
+                games.play();
+            }
+            replay.onclick=function(){
+                games.restart();
+            }
+            pause.onclick=function(){
+                games.pause();
+            }
+            jixu.onclick=function(){
+                games.continue();
+            }
+            var select=document.getElementsByTagName("select")[0];
+            select.onchange=function(){
+//                games.restart();
+                clearInterval(games.t);
+                for(var i=0;i<games.spans.length;i++){
+                    document.body.removeChild(games.spans[i]);
+                }
+                games.speed=3;
+                games.letterLen=5;
+                games.spans=[];
+                games.currArr=[];
+                games.currPosArr=[];
+                games.speed+=parseInt((select[select.selectedIndex].value));
+                games.letterLen+=parseInt((select[select.selectedIndex].value));
+                games.aa=parseInt((select[select.selectedIndex].value));
+                games.play();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="panel panel1">
+        <div class="die">
+            <span>生命:</span> <span>10</span>
+        </div>
+        <div class="sore">
+            <span>分数:</span> <span>0</span>
+        </div>
+    </div>
+    <div class="panel panel2">
+        <div id="play">开始游戏</div>
+        <div id="guanqia">
+            <span>请选择关卡:</span>
+            <select name="" id="">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div id="replay">重新开始</div>
+        <div id="close">暂停</div>
+        <div id="continue">继续</div>
+    </div>
+    <div id="hide"></div>
+</body>
+</html>
